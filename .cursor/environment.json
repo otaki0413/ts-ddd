@@ -1,0 +1,4 @@
+{
+  "name": "ts-ddd",
+  "install": "bash .cursor/install.sh"
+}
