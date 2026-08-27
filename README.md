@@ -27,10 +27,6 @@ pnpm install
 | `pnpm format` | ファイルを整形する。確認のみなら`--check`を付ける  |
 | `pnpm check`  | lint・型、format、テスト、ビルドをまとめて確認する |
 
-## Cloud Agent 環境
-
-Cursor Cloud Agent 用のセットアップは `.cursor/environment.json` と `.cursor/install.sh` に定義しています。既定イメージの `node` は v22 のため、`install` フェーズで nvm により Node 24 を用意し、corepack で pnpm を有効化してから `pnpm install` を実行します。詳細は `.cursor/install.sh` のコメントを参照してください。
-
 ## ドキュメント
 
 - [機材予約・貸出管理アプリの概要](docs/product-overview.md)
