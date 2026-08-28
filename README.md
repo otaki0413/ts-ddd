@@ -29,8 +29,7 @@ pnpm install
 
 ## ドキュメント
 
-- [機材予約・貸出管理アプリの概要](docs/product-overview.md)
-- [ユビキタス言語](docs/ubiquitous-language.md)
-- [DDD の設計判断ガイド](docs/ddd-guidelines.md)
+- [CONTEXT.md](CONTEXT.md) — ユビキタス言語
+- [docs/adr](docs/adr/) — 設計判断
 
-今後の設計判断は、テーマごとに `docs` 配下の Markdown へ追加し、この一覧から参照できるようにします。
+用語が固まったら `CONTEXT.md` を、覆しにくい判断が固まったら `docs/adr/` を更新します。
