@@ -23,3 +23,7 @@ Issues live in this repo's GitHub Issues. See `docs/agents/issue-tracker.md`.
 ### Domain docs
 
 Single-context: root `CONTEXT.md` and `docs/adr/`. See `docs/agents/domain.md`.
+
+### Ticket decomposition
+
+`to-tickets` は、作業を複数の tracer-bullet ticket に分割する規模になった時点で追加する。それまではプロジェクトローカルにインストールしない。
