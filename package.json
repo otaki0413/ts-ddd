@@ -11,6 +11,9 @@
     "format": "oxfmt .",
     "check": "pnpm run lint && pnpm run format --check && pnpm run test && pnpm run build"
   },
+  "dependencies": {
+    "@js-temporal/polyfill": "^0.5.1"
+  },
   "devDependencies": {
     "@types/node": "24.13.3",
     "oxfmt": "0.60.0",
