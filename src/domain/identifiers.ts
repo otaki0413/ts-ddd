@@ -12,4 +12,8 @@ export class ReservationId {
 
 export class UserId {
   constructor(readonly value: string) {}
+
+  equals(other: UserId): boolean {
+    return this.value === other.value;
+  }
 }
