@@ -10,7 +10,7 @@ export interface EquipmentRepository {
 }
 
 export interface ReservationQuery {
-  findPendingOverlapping(
+  findOverlapping(
     managementNumber: ManagementNumber,
     period: ReservationPeriod,
   ): Promise<readonly Reservation[]>;
@@ -87,7 +87,7 @@ export class ReserveEquipment {
       return { ok: false, reason: "equipment-not-found" };
     }
 
-    const existingReservations = await this.#dependencies.reservationQuery.findPendingOverlapping(
+    const existingReservations = await this.#dependencies.reservationQuery.findOverlapping(
       managementNumber,
       periodResult.period,
     );

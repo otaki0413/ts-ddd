@@ -34,13 +34,13 @@ const setup = (options: SetupOptions = {}) => {
   const now = options.now ?? Instant.from("2026-09-01T01:00:00Z");
 
   const findByManagementNumber = vi.fn().mockResolvedValue(equipment ?? undefined);
-  const findPendingOverlapping = vi.fn().mockResolvedValue(existingReservations);
+  const findOverlapping = vi.fn().mockResolvedValue(existingReservations);
   const tryCommit = vi.fn().mockResolvedValue(commitResult);
   const nextReservationId = vi.fn().mockReturnValue(new ReservationId("reservation-new"));
 
   const service = new ReserveEquipment({
     equipmentRepository: { findByManagementNumber },
-    reservationQuery: { findPendingOverlapping },
+    reservationQuery: { findOverlapping },
     reservationCommitter: { tryCommit },
     reservationIdGenerator: { next: nextReservationId },
     clock: { now: () => now },
@@ -49,7 +49,7 @@ const setup = (options: SetupOptions = {}) => {
   return {
     service,
     findByManagementNumber,
-    findPendingOverlapping,
+    findOverlapping,
     tryCommit,
     nextReservationId,
   };
