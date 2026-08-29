@@ -90,16 +90,19 @@ describe("CancelReservation", () => {
     expect(tryCancel).not.toHaveBeenCalled();
   });
 
-  it("rejects an expired reservation, without committing", async () => {
+  it("asks the canceller to distinguish expired from loaned after the planned return time", async () => {
+    // An overdue loaned reservation must surface as already-loaned, which only
+    // the canceller can observe, so the use case must not fail from the clock alone.
     const { service, tryCancel } = setup({
       // 2026-09-01T11:00 Asia/Tokyo: the planned return time has passed.
       now: Instant.from("2026-09-01T02:00:00Z"),
+      cancelCommitResult: "already-loaned",
     });
 
     const result = await service.execute(validCommand);
 
-    expect(result).toEqual({ ok: false, reason: "reservation-expired" });
-    expect(tryCancel).not.toHaveBeenCalled();
+    expect(result).toEqual({ ok: false, reason: "already-loaned" });
+    expect(tryCancel).toHaveBeenCalled();
   });
 
   it.each([

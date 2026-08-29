@@ -96,9 +96,11 @@ describe("Reservation.cancel", () => {
     expect(result).toEqual({ ok: false, reason: "already-cancelled" });
   });
 
-  it("rejects cancelling an expired reservation", () => {
+  it("leaves the expired-or-loaned distinction to the cancellation commit after the planned return time", () => {
+    // The aggregate cannot see loans, so it must not classify a reached return
+    // time as expiry by itself: the reservation may be loaned and overdue.
     const reservation = createReservation();
-    // 2026-09-01T11:00 Asia/Tokyo: exactly the planned return time, so the reservation has expired.
+    // 2026-09-01T11:00 Asia/Tokyo: exactly the planned return time.
     const atPlannedReturn = Instant.from("2026-09-01T02:00:00Z");
 
     const result = reservation.cancel({
@@ -107,7 +109,7 @@ describe("Reservation.cancel", () => {
       now: atPlannedReturn,
     });
 
-    expect(result).toEqual({ ok: false, reason: "reservation-expired" });
+    expect(result.ok).toBe(true);
   });
 
   it("allows cancelling after the planned start as long as the reservation has not expired", () => {

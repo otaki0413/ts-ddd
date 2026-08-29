@@ -15,7 +15,7 @@ export interface CancelReservationRequest {
 
 export type ReservationCancellationResult =
   | { ok: true; reservation: Reservation }
-  | { ok: false; reason: "canceller-not-permitted" | "already-cancelled" | "reservation-expired" };
+  | { ok: false; reason: "canceller-not-permitted" | "already-cancelled" };
 
 interface ReservationProperties {
   id: ReservationId;
@@ -53,10 +53,8 @@ export class Reservation {
       return { ok: false, reason: "already-cancelled" };
     }
 
-    if (this.period.hasEndedBy(request.now)) {
-      return { ok: false, reason: "reservation-expired" };
-    }
-
+    // 予約失効は「返却予定日時までに貸出が生じなかった」ことが条件だが、集約は
+    // 貸出を参照できない。失効と貸出済み(延滞)の区別は取消の最終確定に委ねる。
     return {
       ok: true,
       reservation: new Reservation({
