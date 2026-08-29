@@ -17,6 +17,10 @@ export class Instant {
   get epochNanoseconds(): bigint {
     return this.#value.epochNanoseconds;
   }
+
+  isBefore(other: Instant): boolean {
+    return this.#value.epochNanoseconds < other.epochNanoseconds;
+  }
 }
 
 export class ReservationDateTime {

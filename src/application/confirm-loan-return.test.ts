@@ -16,6 +16,20 @@ const createLoan = (): Loan =>
     processedBy: new UserId("admin-1"),
   });
 
+const createReturnedLoan = (): Loan => {
+  const returned = createLoan().confirmReturn({
+    confirmedBy: new UserId("admin-2"),
+    isAdministrator: true,
+    returnedAt: Instant.from("2026-09-01T02:00:00Z"),
+  });
+
+  if (!returned.ok) {
+    throw new Error("Expected the loan to already be returned");
+  }
+
+  return returned.loan;
+};
+
 interface SetupOptions {
   equipment?: Equipment | null;
   loan?: Loan | null;
@@ -99,17 +113,7 @@ describe("ConfirmLoanReturn", () => {
   });
 
   it("rejects a loan that is already returned", async () => {
-    const returned = createLoan().confirmReturn({
-      confirmedBy: new UserId("admin-2"),
-      isAdministrator: true,
-      returnedAt: Instant.from("2026-09-01T02:00:00Z"),
-    });
-
-    if (!returned.ok) {
-      throw new Error("Expected the loan to already be returned");
-    }
-
-    const { service } = setup({ loan: returned.loan });
+    const { service } = setup({ loan: createReturnedLoan() });
 
     const result = await service.execute(validCommand);
 
@@ -164,17 +168,7 @@ describe("ConfirmLoanReturn", () => {
   });
 
   it("prefers executor-is-not-administrator over already-returned", async () => {
-    const returned = createLoan().confirmReturn({
-      confirmedBy: new UserId("admin-2"),
-      isAdministrator: true,
-      returnedAt: Instant.from("2026-09-01T02:00:00Z"),
-    });
-
-    if (!returned.ok) {
-      throw new Error("Expected the loan to already be returned");
-    }
-
-    const { service } = setup({ loan: returned.loan });
+    const { service } = setup({ loan: createReturnedLoan() });
 
     const result = await service.execute({
       ...validCommand,
@@ -185,18 +179,8 @@ describe("ConfirmLoanReturn", () => {
   });
 
   it("prefers already-returned over a return time before the loan", async () => {
-    const returned = createLoan().confirmReturn({
-      confirmedBy: new UserId("admin-2"),
-      isAdministrator: true,
-      returnedAt: Instant.from("2026-09-01T02:00:00Z"),
-    });
-
-    if (!returned.ok) {
-      throw new Error("Expected the loan to already be returned");
-    }
-
     const { service } = setup({
-      loan: returned.loan,
+      loan: createReturnedLoan(),
       now: Instant.from("2026-09-01T00:59:59.999Z"),
     });
 

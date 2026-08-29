@@ -54,9 +54,9 @@ export class ConfirmLoanReturn {
   }
 
   async execute(command: ConfirmLoanReturnCommand): Promise<ConfirmLoanReturnResult> {
-    const equipment = await this.#dependencies.equipmentRepository.findByManagementNumber(
-      new ManagementNumber(command.managementNumber),
-    );
+    const managementNumber = new ManagementNumber(command.managementNumber);
+    const equipment =
+      await this.#dependencies.equipmentRepository.findByManagementNumber(managementNumber);
 
     if (!equipment) {
       return { ok: false, reason: "equipment-not-found" };
@@ -81,7 +81,7 @@ export class ConfirmLoanReturn {
     }
 
     const confirmResult = await this.#dependencies.loanReturnConfirmer.tryConfirm(
-      new ManagementNumber(command.managementNumber),
+      managementNumber,
       confirmation.loan,
     );
 

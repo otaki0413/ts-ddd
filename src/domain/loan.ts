@@ -42,16 +42,20 @@ export class Loan {
     this.returnConfirmation = properties.returnConfirmation;
   }
 
+  get isReturned(): boolean {
+    return this.returnConfirmation !== undefined;
+  }
+
   confirmReturn(request: ConfirmReturnRequest): ConfirmReturnResult {
     if (!request.isAdministrator) {
       return { ok: false, reason: "executor-is-not-administrator" };
     }
 
-    if (this.returnConfirmation !== undefined) {
+    if (this.isReturned) {
       return { ok: false, reason: "already-returned" };
     }
 
-    if (request.returnedAt.epochNanoseconds < this.loanedAt.epochNanoseconds) {
+    if (request.returnedAt.isBefore(this.loanedAt)) {
       return { ok: false, reason: "return-time-before-loan" };
     }
 
