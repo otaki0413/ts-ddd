@@ -130,13 +130,16 @@ describe("ConfirmLoanReturn", () => {
     ["already-returned", "already-returned"],
     ["equipment-not-on-loan", "equipment-not-on-loan"],
     ["return-target-changed", "return-target-changed"],
-  ] as const)("maps a %s confirm conflict to the use case result", async (confirmResult, reason) => {
-    const { service } = setup({ confirmResult });
+  ] as const)(
+    "maps a %s confirm conflict to the use case result",
+    async (confirmResult, reason) => {
+      const { service } = setup({ confirmResult });
 
-    const result = await service.execute(validCommand);
+      const result = await service.execute(validCommand);
 
-    expect(result).toEqual({ ok: false, reason });
-  });
+      expect(result).toEqual({ ok: false, reason });
+    },
+  );
 
   it("prefers equipment-not-found over a missing loan and a non-administrator", async () => {
     const { service } = setup({ equipment: null, loan: null });
