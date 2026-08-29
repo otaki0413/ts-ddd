@@ -2,8 +2,8 @@ import { type Equipment } from "../domain/equipment.js";
 import { ManagementNumber, type ReservationId, UserId } from "../domain/identifiers.js";
 import { Reservation } from "../domain/reservation.js";
 import { evaluateReservationAvailability } from "../domain/reservation-availability-policy.js";
-import { type Instant } from "../domain/reservation-date-time.js";
 import { ReservationPeriod } from "../domain/reservation-period.js";
+import { type Clock } from "./clock.js";
 
 export interface EquipmentRepository {
   findByManagementNumber(managementNumber: ManagementNumber): Promise<Equipment | undefined>;
@@ -28,10 +28,6 @@ export interface ReservationCommitter {
 
 export interface ReservationIdGenerator {
   next(): ReservationId;
-}
-
-export interface Clock {
-  now(): Instant;
 }
 
 export interface ReserveEquipmentCommand {
