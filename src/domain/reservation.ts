@@ -3,8 +3,8 @@ import { type Instant } from "./reservation-date-time.js";
 import { type ReservationPeriod } from "./reservation-period.js";
 
 export interface ReservationCancellation {
-  cancelledBy: UserId;
-  cancelledAt: Instant;
+  readonly cancelledBy: UserId;
+  readonly cancelledAt: Instant;
 }
 
 export interface CancelReservationRequest {
