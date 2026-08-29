@@ -32,6 +32,10 @@ export class ReservationPeriod {
     return this.startsAt.isBeforeInstant(instant);
   }
 
+  hasStartedBy(instant: Instant): boolean {
+    return this.startsAt.isAtOrBeforeInstant(instant);
+  }
+
   hasEndedBy(instant: Instant): boolean {
     return this.endsAt.isAtOrBeforeInstant(instant);
   }

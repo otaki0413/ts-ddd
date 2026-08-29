@@ -8,6 +8,10 @@ export class ManagementNumber {
 
 export class ReservationId {
   constructor(readonly value: string) {}
+
+  equals(other: ReservationId): boolean {
+    return this.value === other.value;
+  }
 }
 
 export class UserId {

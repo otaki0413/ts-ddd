@@ -64,4 +64,16 @@ describe("ReservationPeriod", () => {
 
     expect(period.hasEndedBy(Instant.from("2026-09-01T02:00:00Z"))).toBe(true);
   });
+
+  it("has started exactly at the planned start instant", () => {
+    const period = createPeriod("2026-09-01T10:00", "2026-09-01T11:00");
+
+    expect(period.hasStartedBy(Instant.from("2026-09-01T01:00:00Z"))).toBe(true);
+  });
+
+  it("has not started before the planned start instant", () => {
+    const period = createPeriod("2026-09-01T10:00", "2026-09-01T11:00");
+
+    expect(period.hasStartedBy(Instant.from("2026-09-01T00:59:59.999Z"))).toBe(false);
+  });
 });
