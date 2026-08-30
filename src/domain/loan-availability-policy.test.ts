@@ -88,9 +88,19 @@ describe("evaluateLoanAvailability", () => {
   });
 
   it("rejects a suspended equipment", () => {
+    const suspended = Equipment.available(managementNumber).suspend({
+      expectedVersion: 0n,
+      performedBy: new UserId("admin-1"),
+      isAdministrator: true,
+      reason: "点検",
+      now: Instant.from("2026-09-01T00:00:00Z"),
+    });
+    if (!suspended.ok) {
+      throw new Error("Expected the suspension to succeed");
+    }
     const result = evaluateLoanAvailability({
       reservation: createReservation(),
-      equipment: Equipment.suspended(managementNumber),
+      equipment: suspended.equipment,
       unreturnedLoan: undefined,
       now: Instant.from("2026-09-01T01:00:00Z"),
     });

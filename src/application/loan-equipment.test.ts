@@ -154,7 +154,17 @@ describe("LoanEquipment", () => {
   });
 
   it("rejects a suspended equipment", async () => {
-    const { service } = setup({ equipment: Equipment.suspended(managementNumber) });
+    const suspended = Equipment.available(managementNumber).suspend({
+      expectedVersion: 0n,
+      performedBy: new UserId("admin-1"),
+      isAdministrator: true,
+      reason: "点検",
+      now: Instant.from("2026-09-01T00:00:00Z"),
+    });
+    if (!suspended.ok) {
+      throw new Error("Expected the suspension to succeed");
+    }
+    const { service } = setup({ equipment: suspended.equipment });
 
     const result = await service.execute(validCommand);
 

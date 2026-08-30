@@ -41,8 +41,18 @@ describe("evaluateReservationAvailability", () => {
   });
 
   it("rejects a suspended equipment", () => {
+    const suspended = Equipment.available(managementNumber).suspend({
+      expectedVersion: 0n,
+      performedBy: new UserId("admin-1"),
+      isAdministrator: true,
+      reason: "点検",
+      now,
+    });
+    if (!suspended.ok) {
+      throw new Error("Expected the suspension to succeed");
+    }
     const result = evaluateReservationAvailability({
-      equipment: Equipment.suspended(managementNumber),
+      equipment: suspended.equipment,
       existingReservations: [],
       requestedPeriod: createPeriod("2026-09-01T10:00", "2026-09-01T11:00"),
       now,

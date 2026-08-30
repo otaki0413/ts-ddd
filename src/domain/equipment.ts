@@ -49,10 +49,6 @@ export class Equipment {
     return new Equipment(managementNumber, "available");
   }
 
-  static suspended(managementNumber: ManagementNumber): Equipment {
-    return new Equipment(managementNumber, "suspended");
-  }
-
   get isSuspended(): boolean {
     return this.status === "suspended";
   }
