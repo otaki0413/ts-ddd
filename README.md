@@ -29,7 +29,8 @@ pnpm install
 
 ## ドキュメント
 
-- [CONTEXT.md](CONTEXT.md) — ユビキタス言語
-- [docs/adr](docs/adr/) — 設計判断
-
-用語が固まったら `CONTEXT.md` を、覆しにくい判断が固まったら `docs/adr/` を更新します。
+- [CONTEXT.md](CONTEXT.md) — 業務用語とその関係
+- [技術スタック](docs/adr/0010-technology-stack.md) — 採用する技術とその理由・責務
+- [予約の原子的な確定](docs/adr/0011-atomic-reservation-commit-with-postgresql.md) — 排他方式と保証の成立条件
+- [設計判断一覧](docs/adr/) — 集約や業務上の境界についての判断
+- [GitHub Issues](https://github.com/otaki0413/ts-ddd/issues) — 各機能の実装範囲・仕様・受入条件
