@@ -2,7 +2,7 @@ import { Temporal } from "@js-temporal/polyfill";
 import { and, eq, gt, lt, sql } from "drizzle-orm";
 import { type NodePgDatabase } from "drizzle-orm/node-postgres";
 
-import { type ReservationRepository } from "../../application/cancel-reservation.js";
+import { type ReservationRepository } from "../../application/reservation-repository.js";
 import {
   type ReservationCommitResult,
   type ReservationCommitter,

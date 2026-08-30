@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { Temporal } from "@js-temporal/polyfill";
 import { type NodePgDatabase } from "drizzle-orm/node-postgres";
-import { type ReservationRepository } from "./application/cancel-reservation.js";
+import { type ReservationRepository } from "./application/reservation-repository.js";
 import { ReserveEquipment } from "./application/reserve-equipment.js";
 import { ReservationId } from "./domain/identifiers.js";
 import { Instant } from "./domain/reservation-date-time.js";
