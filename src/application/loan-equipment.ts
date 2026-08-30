@@ -2,7 +2,7 @@ import { type ManagementNumber, ReservationId, UserId } from "../domain/identifi
 import { Loan } from "../domain/loan.js";
 import { evaluateLoanAvailability } from "../domain/loan-availability-policy.js";
 import { type Clock } from "./clock.js";
-import { type ReservationRepository } from "./cancel-reservation.js";
+import { type ReservationRepository } from "./reservation-repository.js";
 import { type EquipmentRepository } from "./reserve-equipment.js";
 
 export interface UnreturnedLoanQuery {

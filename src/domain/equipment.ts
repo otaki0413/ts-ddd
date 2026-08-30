@@ -49,6 +49,25 @@ export class Equipment {
     return new Equipment(managementNumber, "available");
   }
 
+  static restore(snapshot: {
+    managementNumber: ManagementNumber;
+    status: EquipmentStatus;
+    lastAvailabilityChange?: EquipmentAvailabilityChange;
+  }): Equipment {
+    const change = snapshot.lastAvailabilityChange;
+    const expectedStatus = change?.kind === "suspended" ? "suspended" : "available";
+    if (
+      snapshot.status !== expectedStatus ||
+      (change &&
+        (!change.managementNumber.equals(snapshot.managementNumber) || change.version <= 0n)) ||
+      (change?.kind === "suspended" &&
+        (change.reason.length === 0 || change.reason !== change.reason.trim()))
+    ) {
+      throw new Error("Invalid equipment snapshot");
+    }
+    return new Equipment(snapshot.managementNumber, snapshot.status, change);
+  }
+
   get isSuspended(): boolean {
     return this.status === "suspended";
   }

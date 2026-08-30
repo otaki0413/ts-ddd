@@ -1,10 +1,7 @@
 import { ReservationId, UserId } from "../domain/identifiers.js";
 import { type Reservation } from "../domain/reservation.js";
 import { type Clock } from "./clock.js";
-
-export interface ReservationRepository {
-  findById(reservationId: ReservationId): Promise<Reservation | undefined>;
-}
+import { type ReservationRepository } from "./reservation-repository.js";
 
 export type ReservationCancelCommitResult =
   | "cancelled"
