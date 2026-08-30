@@ -1,8 +1,8 @@
-import { ManagementNumber } from "../domain/identifiers.js";
+import { ManagementNumber } from "../domain/identifiers";
 import {
   type EquipmentAvailabilitySnapshot,
   type EquipmentAvailabilityStore,
-} from "./equipment-availability-store.js";
+} from "./equipment-availability-store";
 
 export interface GetEquipmentAvailabilityQuery {
   managementNumber: string;

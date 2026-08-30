@@ -1,11 +1,11 @@
 import { describe, expect, it, vi } from "vitest";
 
-import { Equipment } from "../domain/equipment.js";
-import { ManagementNumber, ReservationId, UserId } from "../domain/identifiers.js";
-import { Reservation } from "../domain/reservation.js";
-import { Instant } from "../domain/reservation-date-time.js";
-import { ReservationPeriod } from "../domain/reservation-period.js";
-import { type ReservationCommitResult, ReserveEquipment } from "./reserve-equipment.js";
+import { Equipment } from "../domain/equipment";
+import { ManagementNumber, ReservationId, UserId } from "../domain/identifiers";
+import { Reservation } from "../domain/reservation";
+import { Instant } from "../domain/reservation-date-time";
+import { ReservationPeriod } from "../domain/reservation-period";
+import { type ReservationCommitResult, ReserveEquipment } from "./reserve-equipment";
 
 const managementNumber = new ManagementNumber("EQ-001");
 

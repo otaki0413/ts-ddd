@@ -1,10 +1,10 @@
 import { describe, expect, it, vi } from "vitest";
 
-import { ManagementNumber, ReservationId, UserId } from "../domain/identifiers.js";
-import { Reservation } from "../domain/reservation.js";
-import { Instant } from "../domain/reservation-date-time.js";
-import { ReservationPeriod } from "../domain/reservation-period.js";
-import { CancelReservation, type ReservationCancelCommitResult } from "./cancel-reservation.js";
+import { ManagementNumber, ReservationId, UserId } from "../domain/identifiers";
+import { Reservation } from "../domain/reservation";
+import { Instant } from "../domain/reservation-date-time";
+import { ReservationPeriod } from "../domain/reservation-period";
+import { CancelReservation, type ReservationCancelCommitResult } from "./cancel-reservation";
 
 const createPeriod = (startsAt: string, endsAt: string): ReservationPeriod => {
   const result = ReservationPeriod.create(startsAt, endsAt);

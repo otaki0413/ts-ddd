@@ -1,22 +1,22 @@
 import { describe, expect, it } from "vitest";
 
-import { Equipment } from "../domain/equipment.js";
-import { ManagementNumber, ReservationId, UserId } from "../domain/identifiers.js";
-import { type Reservation } from "../domain/reservation.js";
-import { type Loan } from "../domain/loan.js";
-import { evaluateReservationAvailability } from "../domain/reservation-availability-policy.js";
-import { Instant } from "../domain/reservation-date-time.js";
+import { Equipment } from "../domain/equipment";
+import { ManagementNumber, ReservationId, UserId } from "../domain/identifiers";
+import { type Reservation } from "../domain/reservation";
+import { type Loan } from "../domain/loan";
+import { evaluateReservationAvailability } from "../domain/reservation-availability-policy";
+import { Instant } from "../domain/reservation-date-time";
 import {
   type EquipmentAvailabilitySnapshot,
   type EquipmentAvailabilityStore,
-} from "./equipment-availability-store.js";
-import { GetEquipmentAvailability } from "./get-equipment-availability.js";
-import { SuspendEquipment } from "./suspend-equipment.js";
-import { ResumeEquipment } from "./resume-equipment.js";
-import { ReserveEquipment } from "./reserve-equipment.js";
-import { LoanEquipment } from "./loan-equipment.js";
-import { ConfirmLoanReturn } from "./confirm-loan-return.js";
-import { CancelReservation } from "./cancel-reservation.js";
+} from "./equipment-availability-store";
+import { GetEquipmentAvailability } from "./get-equipment-availability";
+import { SuspendEquipment } from "./suspend-equipment";
+import { ResumeEquipment } from "./resume-equipment";
+import { ReserveEquipment } from "./reserve-equipment";
+import { LoanEquipment } from "./loan-equipment";
+import { ConfirmLoanReturn } from "./confirm-loan-return";
+import { CancelReservation } from "./cancel-reservation";
 
 const managementNumber = new ManagementNumber("EQ-001");
 const now = Instant.from("2026-09-01T01:00:00.123456789Z");

@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
 
-import { ManagementNumber, ReservationId, UserId } from "./identifiers.js";
-import { Reservation } from "./reservation.js";
-import { Instant } from "./reservation-date-time.js";
-import { ReservationPeriod } from "./reservation-period.js";
+import { ManagementNumber, ReservationId, UserId } from "./identifiers";
+import { Reservation } from "./reservation";
+import { Instant } from "./reservation-date-time";
+import { ReservationPeriod } from "./reservation-period";
 
 const createPeriod = (startsAt: string, endsAt: string): ReservationPeriod => {
   const result = ReservationPeriod.create(startsAt, endsAt);

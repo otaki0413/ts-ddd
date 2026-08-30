@@ -1,7 +1,7 @@
-import { ReservationId, UserId } from "../domain/identifiers.js";
-import { type Reservation } from "../domain/reservation.js";
-import { type Clock } from "./clock.js";
-import { type ReservationRepository } from "./reservation-repository.js";
+import { ReservationId, UserId } from "../domain/identifiers";
+import { type Reservation } from "../domain/reservation";
+import { type Clock } from "./clock";
+import { type ReservationRepository } from "./reservation-repository";
 
 export type ReservationCancelCommitResult =
   | "cancelled"

@@ -2,19 +2,19 @@ import { Temporal } from "@js-temporal/polyfill";
 import { and, eq, gt, lt, sql } from "drizzle-orm";
 import { type NodePgDatabase } from "drizzle-orm/node-postgres";
 
-import { type ReservationRepository } from "../../application/reservation-repository.js";
+import { type ReservationRepository } from "../../application/reservation-repository";
 import {
   type ReservationCommitResult,
   type ReservationCommitter,
   type ReservationQuery,
-} from "../../application/reserve-equipment.js";
-import { ManagementNumber, ReservationId, UserId } from "../../domain/identifiers.js";
-import { Reservation } from "../../domain/reservation.js";
-import { Instant, type ReservationDateTime } from "../../domain/reservation-date-time.js";
-import { evaluateReservationAvailability } from "../../domain/reservation-availability-policy.js";
-import { ReservationPeriod } from "../../domain/reservation-period.js";
-import { equipment, reservations } from "./schema.js";
-import { restoreEquipment } from "./equipment.js";
+} from "../../application/reserve-equipment";
+import { ManagementNumber, ReservationId, UserId } from "../../domain/identifiers";
+import { Reservation } from "../../domain/reservation";
+import { Instant, type ReservationDateTime } from "../../domain/reservation-date-time";
+import { evaluateReservationAvailability } from "../../domain/reservation-availability-policy";
+import { ReservationPeriod } from "../../domain/reservation-period";
+import { equipment, reservations } from "./schema";
+import { restoreEquipment } from "./equipment";
 
 const epochMilliseconds = (value: ReservationDateTime): bigint =>
   BigInt(

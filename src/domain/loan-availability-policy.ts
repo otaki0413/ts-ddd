@@ -1,7 +1,7 @@
-import { type Equipment } from "./equipment.js";
-import { type Loan } from "./loan.js";
-import { type Reservation } from "./reservation.js";
-import { type Instant } from "./reservation-date-time.js";
+import { type Equipment } from "./equipment";
+import { type Loan } from "./loan";
+import { type Reservation } from "./reservation";
+import { type Instant } from "./reservation-date-time";
 
 export type LoanAvailabilityResult =
   | { available: true }

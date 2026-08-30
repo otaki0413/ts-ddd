@@ -1,8 +1,8 @@
-import { ManagementNumber, UserId } from "../domain/identifiers.js";
+import { ManagementNumber, UserId } from "../domain/identifiers";
 import {
   type EquipmentAvailabilityCommitResult,
   type EquipmentAvailabilityStore,
-} from "./equipment-availability-store.js";
+} from "./equipment-availability-store";
 
 export interface SuspendEquipmentCommand {
   managementNumber: string;

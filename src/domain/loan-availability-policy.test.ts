@@ -1,12 +1,12 @@
 import { describe, expect, it } from "vitest";
 
-import { Equipment } from "./equipment.js";
-import { ManagementNumber, ReservationId, UserId } from "./identifiers.js";
-import { Loan } from "./loan.js";
-import { evaluateLoanAvailability } from "./loan-availability-policy.js";
-import { Reservation } from "./reservation.js";
-import { Instant } from "./reservation-date-time.js";
-import { ReservationPeriod } from "./reservation-period.js";
+import { Equipment } from "./equipment";
+import { ManagementNumber, ReservationId, UserId } from "./identifiers";
+import { Loan } from "./loan";
+import { evaluateLoanAvailability } from "./loan-availability-policy";
+import { Reservation } from "./reservation";
+import { Instant } from "./reservation-date-time";
+import { ReservationPeriod } from "./reservation-period";
 
 const managementNumber = new ManagementNumber("EQ-001");
 const reservationId = new ReservationId("reservation-1");

@@ -1,11 +1,11 @@
 import { Temporal } from "@js-temporal/polyfill";
 import { eq } from "drizzle-orm";
 import { type NodePgDatabase } from "drizzle-orm/node-postgres";
-import { type EquipmentRepository } from "../../application/reserve-equipment.js";
-import { Equipment } from "../../domain/equipment.js";
-import { ManagementNumber, UserId } from "../../domain/identifiers.js";
-import { Instant } from "../../domain/reservation-date-time.js";
-import { equipment } from "./schema.js";
+import { type EquipmentRepository } from "../../application/reserve-equipment";
+import { Equipment } from "../../domain/equipment";
+import { ManagementNumber, UserId } from "../../domain/identifiers";
+import { Instant } from "../../domain/reservation-date-time";
+import { equipment } from "./schema";
 
 export const restoreEquipment = (row: typeof equipment.$inferSelect): Equipment => {
   const managementNumber = new ManagementNumber(row.managementNumber);

@@ -1,9 +1,9 @@
 import { Hono } from "hono";
 import * as v from "valibot";
-import { type ReserveEquipmentFailureReason } from "../application/reserve-equipment.js";
-import { ReservationId } from "../domain/identifiers.js";
-import { type Reservation } from "../domain/reservation.js";
-import { type ReservationServices } from "../composition-root.js";
+import { type ReserveEquipmentFailureReason } from "../application/reserve-equipment";
+import { ReservationId } from "../domain/identifiers";
+import { type Reservation } from "../domain/reservation";
+import { type ReservationServices } from "../composition-root";
 
 export interface ReservationResponse {
   id: string;

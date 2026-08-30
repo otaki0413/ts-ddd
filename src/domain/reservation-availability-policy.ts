@@ -1,7 +1,7 @@
-import { type Equipment } from "./equipment.js";
-import { type Reservation } from "./reservation.js";
-import { type Instant } from "./reservation-date-time.js";
-import { type ReservationPeriod } from "./reservation-period.js";
+import { type Equipment } from "./equipment";
+import { type Reservation } from "./reservation";
+import { type Instant } from "./reservation-date-time";
+import { type ReservationPeriod } from "./reservation-period";
 
 export type ReservationAvailabilityResult =
   | { available: true }

@@ -8,6 +8,5 @@ export default defineConfig({
   schema: "./src/infrastructure/postgres/schema.ts",
   schemaFilter: ["public"],
   dbCredentials: { url },
-  strict: true,
   verbose: true,
 });

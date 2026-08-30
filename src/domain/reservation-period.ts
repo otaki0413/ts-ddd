@@ -1,4 +1,4 @@
-import { type Instant, ReservationDateTime } from "./reservation-date-time.js";
+import { type Instant, ReservationDateTime } from "./reservation-date-time";
 
 export type ReservationPeriodCreationResult =
   | { ok: true; period: ReservationPeriod }
