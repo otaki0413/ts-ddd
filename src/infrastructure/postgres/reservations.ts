@@ -38,6 +38,24 @@ const restoreReservation = (row: typeof reservations.$inferSelect): Reservation 
   });
 };
 
+const findOverlapping = async (
+  db: NodePgDatabase,
+  managementNumber: ManagementNumber,
+  period: ReservationPeriod,
+): Promise<readonly Reservation[]> => {
+  const rows = await db
+    .select()
+    .from(reservations)
+    .where(
+      and(
+        eq(reservations.managementNumber, managementNumber.value),
+        lt(reservations.startsAt, epochMilliseconds(period.endsAt)),
+        gt(reservations.endsAt, epochMilliseconds(period.startsAt)),
+      ),
+    );
+  return rows.map(restoreReservation);
+};
+
 export class PostgresReservations
   implements ReservationQuery, ReservationRepository, ReservationCommitter
 {
@@ -48,21 +66,11 @@ export class PostgresReservations
     return row ? restoreReservation(row) : undefined;
   }
 
-  async findOverlapping(
+  findOverlapping(
     managementNumber: ManagementNumber,
     period: ReservationPeriod,
   ): Promise<readonly Reservation[]> {
-    const rows = await this.db
-      .select()
-      .from(reservations)
-      .where(
-        and(
-          eq(reservations.managementNumber, managementNumber.value),
-          lt(reservations.startsAt, epochMilliseconds(period.endsAt)),
-          gt(reservations.endsAt, epochMilliseconds(period.startsAt)),
-        ),
-      );
-    return rows.map(restoreReservation);
+    return findOverlapping(this.db, managementNumber, period);
   }
 
   async tryCommit(reservation: Reservation): Promise<ReservationCommitResult> {
@@ -76,7 +84,8 @@ export class PostgresReservations
         if (!row) throw new Error("Equipment disappeared before reservation commit");
 
         // READ COMMITTED takes a fresh snapshot for this statement after the lock wait.
-        const existingReservations = await new PostgresReservations(tx).findOverlapping(
+        const existingReservations = await findOverlapping(
+          tx,
           reservation.managementNumber,
           reservation.period,
         );

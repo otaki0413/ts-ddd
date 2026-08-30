@@ -20,15 +20,18 @@ export const restoreEquipment = (row: typeof equipment.$inferSelect): Equipment 
       Temporal.Instant.fromEpochNanoseconds(row.lastOccurredAtNs).toString(),
     ),
   };
-  if (row.status === "suspended" && row.suspensionReason === null)
-    throw new Error("Missing suspension reason");
+  if (row.status === "suspended") {
+    if (row.suspensionReason === null) throw new Error("Missing suspension reason");
+    return Equipment.restore({
+      managementNumber,
+      status: row.status,
+      lastAvailabilityChange: { ...change, kind: "suspended", reason: row.suspensionReason },
+    });
+  }
   return Equipment.restore({
     managementNumber,
     status: row.status,
-    lastAvailabilityChange:
-      row.status === "suspended"
-        ? { ...change, kind: "suspended", reason: row.suspensionReason! }
-        : { ...change, kind: "resumed" },
+    lastAvailabilityChange: { ...change, kind: "resumed" },
   });
 };
 

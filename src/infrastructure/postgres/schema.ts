@@ -28,7 +28,8 @@ export const equipment = pgTable(
     AND ${table.lastOccurredAtNs} = trunc(${table.lastOccurredAtNs})
     AND ((${table.status} = 'available' AND ${table.suspensionReason} IS NULL)
       OR (${table.status} = 'suspended' AND ${table.suspensionReason} IS NOT NULL
-        AND length(btrim(${table.suspensionReason})) > 0))
+        AND length(${table.suspensionReason}) > 0
+        AND ${table.suspensionReason} = btrim(${table.suspensionReason})))
   )`,
     ),
   ],

@@ -572,6 +572,18 @@ it.each(["missing", "00000000-0000-4000-8000-000000000000"])(
   },
 );
 
+it("rejects an untrimmed suspension reason before it becomes a stored equipment snapshot", async () => {
+  await expect(
+    pool.query(
+      `UPDATE equipment SET status = 'suspended', version = 1,
+        last_performed_by = 'admin-1', last_occurred_at_ns = 1780000000123456789,
+        suspension_reason = $1 WHERE management_number = 'EQ-001'`,
+      [" 点検 "],
+    ),
+  ).rejects.toMatchObject({ code: "23514", constraint: "consistent_equipment_snapshot" });
+  expect((await post()).status).toBe(201);
+});
+
 it.each(["suspended", "available"] as const)(
   "restores %s equipment without losing the last change or replaying transitions",
   async (status) => {
