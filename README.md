@@ -24,14 +24,18 @@ DB接続はサーバー専用の`DATABASE_URL`、テストは`TEST_DATABASE_URL`
 
 ```shell
 pnpm db:up
-pnpm db:migrate
+pnpm db:push
 pnpm db:seed
 pnpm dev
 ```
 
-DBだけをDocker上のPostgreSQL 18.4で動かし、APIはホストのNode.js上で実行します。APIは`http://127.0.0.1:5173`で待ち受けます。初回はイメージ取得が必要です。`db:up`はDBが接続可能になるまで待ちます。マイグレーションもシードも繰り返し実行できます。シードは利用可能な`EQ-001`と`EQ-002`を追加し、既存の機材状態は上書きしません。
+DBだけをDocker上のPostgreSQL 18.4で動かし、APIはホストのNode.js上で実行します。APIは`http://127.0.0.1:5173`で待ち受けます。初回はイメージ取得が必要です。`db:up`はDBが接続可能になるまで待ちます。シードは利用可能な`EQ-001`と`EQ-002`を追加し、繰り返しても既存の機材状態を上書きしません。
+
+ローカル開発では[src/infrastructure/postgres/schema.ts](src/infrastructure/postgres/schema.ts)を正として、`.env`を読む`db:push`で`public`スキーマへ反映します。マイグレーションSQLやスナップショットの履歴は管理しません。初回やスキーマ変更後は表示された差分を確認して適用してください。変更がなければ再実行しても何も変わりません。データ損失の警告が出た場合は中止し、既存データを保つ変更方法を検討してください。`--force`やボリューム削除で回避しないでください。以前のマイグレーションで作成済みの`drizzle`スキーマはpushの対象外で、履歴を削除する必要はありません。
 
 開発DBのデータはComposeの`development-data`ボリュームに残ります。APIはCtrl-C、DBは`pnpm db:stop`で停止します。再開時は`pnpm db:up`と`pnpm dev`を実行してください。Vite設定が接続プールを1つ所有し、サーバー終了時に閉じます。HTTP要求やアプリケーションエントリの再評価ではプールを作りません。
+
+Composeのプロジェクト名は、予約以外の機能も扱うため`ts-ddd`とします。開発ボリュームの実体名は既存データを引き継ぐため`ts-ddd-reservations_development-data`に固定しています。旧プロジェクト名でDBを起動中の場合は、`docker compose -p ts-ddd-reservations --profile test stop`で停止してから新しい名前で起動してください。既存ボリュームの作成元が旧プロジェクト名である旨の警告は出ますが、そのボリュームを再利用します。ボリュームの削除やデータの移し替えは不要です。
 
 ## 予約を作成して読み戻す
 
@@ -62,7 +66,9 @@ pnpm test:db:stop
 
 `pnpm check`はDB不要の既存テストと、Vite・Drizzle設定および実DBテストを含む型検査・整形・TypeScriptビルドを実行します。Drizzleの未使用DBドライバーへの型参照など、依存ライブラリ内部の宣言ファイルは`skipLibCheck`の対象にします。プロジェクトのソースと設定はstrictのまま検査します。実DBテストは別コマンドです。DBが起動していない場合にスキップせず失敗します。`pnpm test:db -t 'テスト名'`で絞り込めます。
 
-実DBテストは専用の`ts_ddd_test`へマイグレーションを適用し、そのDBの機材・予約をテストごとに初期化します。接続先のホスト・ポート・DB名・ユーザーを検査し、開発DBへ接続する設定では実行しません。テストDBは専用コンテナのtmpfsに置き、停止するとデータが失われます。同じテストDBを使うテストコマンドは同時に実行しないでください。
+実DBテストは専用の`ts_ddd_test`へDrizzle Kitのpush APIで同じTypeScriptスキーマを反映し、そのDBの機材・予約をテストごとに初期化します。スキーマ反映がデータ損失を伴うと判定された場合は適用せず失敗します。pushの対象は`public`だけで、時刻制御用の`test_clock`スキーマは対象外です。接続先のホスト・ポート・DB名・ユーザーを検査し、開発DBへ接続する設定では実行しません。テストDBは専用コンテナのtmpfsに置き、停止するとデータが失われます。同じテストDBを使うテストコマンドは同時に実行しないでください。
+
+Composeの`test-db`は暫定構成です。今後、テスト用PostgreSQLをTestcontainersで起動し、Composeは開発DBだけを担当する方針ですが、Testcontainersはまだ導入していません。
 
 主な検証境界はHonoのHTTP要求から既存ユースケース、実Drizzleアダプタ、PostgreSQLまでです。Viteの実設定も一時ポートで起動し、作成・読み戻し・JSONエラーを確認します。同時予約では両方の事前確認を待ち合わせ、独立した接続がDB上でロック待ちすることを観測してから解放し、成立件数を確認します。時刻境界ではテスト専用スキーマのDB時計を制御します。通常のテストと開発APIでは実際の`clock_timestamp()`を使い、アプリの時計だけの固定で代用しません。遅延制約の障害注入もテストDB内だけで行います。
 
@@ -83,15 +89,16 @@ pnpm test:db:stop
 | `pnpm format`                           | ファイルを整形する。確認のみなら`--check`を付ける                      |
 | `pnpm check`                            | lint・型、format、テスト、ビルドをまとめて確認する                     |
 | `pnpm db:up` / `pnpm db:stop`           | 開発DBの起動・停止                                                     |
-| `pnpm db:generate`                      | スキーマ変更からマイグレーションSQLを生成する                          |
-| `pnpm db:migrate` / `pnpm db:seed`      | 開発DBへのマイグレーション適用・機材シード                             |
+| `pnpm db:push`                          | `.env`を読み、TypeScriptスキーマを開発DBへ反映する                     |
+| `pnpm db:seed`                          | 開発DBへ機材をシードする                                               |
 | `pnpm test:db:up` / `pnpm test:db:stop` | 専用テストDBの起動・停止                                               |
 | `pnpm test:db`                          | HTTP境界から実DBまでを検証する                                         |
 
 ## ドキュメント
 
 - [CONTEXT.md](CONTEXT.md) — 業務用語とその関係
-- [技術スタック](docs/adr/0010-technology-stack.md) — 採用する技術とその理由・責務
+- [技術スタック](docs/adr/0010-technology-stack.md) — 採用する技術と選定理由
+- [バックエンドの構成](docs/adr/0012-backend-layered-directory-structure.md) — 4層の責務・依存方向とComposition Root
 - [予約の原子的な確定](docs/adr/0011-atomic-reservation-commit-with-postgresql.md) — 排他方式と保証の成立条件
 - [設計判断一覧](docs/adr/) — 集約や業務上の境界についての判断
 - [GitHub Issues](https://github.com/otaki0413/ts-ddd/issues) — 各機能の実装範囲・仕様・受入条件

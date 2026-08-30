@@ -3,18 +3,18 @@ import { Temporal } from "@js-temporal/polyfill";
 import { createServer } from "vite";
 import { afterAll, beforeAll, beforeEach, expect, it } from "vitest";
 import { drizzle } from "drizzle-orm/node-postgres";
-import { migrate } from "drizzle-orm/node-postgres/migrator";
+import { pushSchema } from "drizzle-kit/api";
 import { Pool } from "pg";
 
-import { app } from "../src/http/app.js";
-import { createReservationServices } from "../src/reservation-services.js";
-import { equipment } from "../src/infrastructure/postgres/schema.js";
+import { app } from "../src/presentation/app.js";
+import { createReservationServices } from "../src/composition-root.js";
+import * as schema from "../src/infrastructure/postgres/schema.js";
 import { PostgresEquipmentRepository } from "../src/infrastructure/postgres/equipment.js";
 import { ManagementNumber, ReservationId } from "../src/domain/identifiers.js";
 import { Instant } from "../src/domain/reservation-date-time.js";
 import { ReserveEquipment } from "../src/application/reserve-equipment.js";
 import { PostgresReservations } from "../src/infrastructure/postgres/reservations.js";
-import { type ReservationServices } from "../src/reservation-services.js";
+import { type ReservationServices } from "../src/composition-root.js";
 import { installDatabaseClock, setDatabaseClock } from "./database-clock.js";
 
 const testUrl = new URL(process.env.TEST_DATABASE_URL ?? "");
@@ -40,6 +40,7 @@ const pool = new Pool(connectionOptions);
 const readerPool = new Pool(connectionOptions);
 const controlPool = new Pool({ connectionString: process.env.TEST_DATABASE_URL, max: 2 });
 const db = drizzle(pool);
+const { equipment } = schema;
 const validCommand = {
   userId: "user-1",
   managementNumber: "EQ-001",
@@ -99,7 +100,9 @@ const expectLockWaits = async (pids: number[]) => {
 };
 
 beforeAll(async () => {
-  await migrate(drizzle(controlPool), { migrationsFolder: "./drizzle" });
+  const push = await pushSchema(schema, drizzle(controlPool), ["public"]);
+  if (push.hasDataLoss) throw new Error("Refusing schema push that may lose test data");
+  await push.apply();
   await installDatabaseClock(controlPool);
 });
 

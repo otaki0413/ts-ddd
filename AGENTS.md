@@ -12,7 +12,6 @@ TypeScript と DDD の学習用で、単一拠点の機材予約・貸出管理�
 
 - `NodeNext` を使用しているため、相対 import には TypeScript ソースでも `.js` 拡張子を書く。
 - lint と型検査は `pnpm lint` に統合されている。変更完了前に `pnpm check` を実行する。
-- `src/greeting.ts` は環境確認用であり、ドメインモデルとして発展させない。
 
 ## Agent skills
 

@@ -1,4 +1,4 @@
-name: ts-ddd-reservations
+name: ts-ddd
 services:
   db:
     image: postgres:18.4-bookworm
@@ -15,6 +15,7 @@ services:
       interval: 1s
       timeout: 5s
       retries: 30
+  # Testcontainers導入までは専用テストDBをComposeで起動する。
   test-db:
     image: postgres:18.4-bookworm
     profiles: [test]
@@ -33,3 +34,5 @@ services:
       retries: 30
 volumes:
   development-data:
+    # プロジェクト名の変更後も既存の開発データを引き継ぐ。
+    name: ts-ddd-reservations_development-data

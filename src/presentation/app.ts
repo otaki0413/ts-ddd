@@ -3,7 +3,7 @@ import * as v from "valibot";
 import { type ReserveEquipmentFailureReason } from "../application/reserve-equipment.js";
 import { ReservationId } from "../domain/identifiers.js";
 import { type Reservation } from "../domain/reservation.js";
-import { type ReservationServices } from "../reservation-services.js";
+import { type ReservationServices } from "../composition-root.js";
 
 export interface ReservationResponse {
   id: string;

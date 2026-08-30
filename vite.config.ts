@@ -2,7 +2,7 @@ import devServer from "@hono/vite-dev-server";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 import { defineConfig } from "vite";
-import { createReservationServices } from "./src/reservation-services.js";
+import { createReservationServices } from "./src/composition-root.js";
 
 export default defineConfig(() => {
   if (!process.env.DATABASE_URL) throw new Error("DATABASE_URL is required; run pnpm dev");
