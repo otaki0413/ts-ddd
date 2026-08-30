@@ -1,6 +1,6 @@
 # 技術スタックを選ぶ
 
-TypeScriptとDDDの学習に用いる技術を、役割と採用理由とともに定める。技術を追加するときはこのADRへ選定内容を追記し、各機能の実装範囲・API契約・受入条件は対応するIssueで定める。導入状況と実行手順はREADMEを参照する。
+TypeScriptとDDDの学習に用いる技術を、役割と採用理由とともに定める。技術を追加するときはこのADRへ選定内容を追記し、各機能の実装範囲・API契約・受入条件は対応するIssueで定める。手元で動かす最短経路は[README](../../README.md)、接続先やスキーマ反映・実DB検証の詳細は[ローカル開発](../local-dev.md)を参照する。
 
 ## バックエンド
 
@@ -14,6 +14,8 @@ TypeScriptとDDDの学習に用いる技術を、役割と採用理由ととも�
 | データベース | Docker Composeで起動するPostgreSQL |
 
 HonoによるAPI開発を学習対象とし、Viteの開発サーバーでローカル実行する。PostgreSQLは、トランザクション内でTypeScriptのドメイン判定を使え、独立した接続間で排他を検証できるため選ぶ。DrizzleはSQLとトランザクションを明示して扱うために採用する。DBだけをDockerで起動し、アプリケーションはホスト上のNode.jsで動かす。本番環境へのデプロイや特定のクラウドサービスへの適合は、この学習環境の成立条件にしない。
+
+モジュール解決はTypeScriptのBundlerとし、相対importに拡張子は書かない。配布用のJavaScriptは出さない。型検査はoxlintのtype-aware / type-checkに寄せ、`tsc`のemitはcheckに含めない。Vite+への移行は今は行わない。
 
 HonoはHTTP入出力の変換、Valibotは入力の構造と型の検証、DrizzleはSQLと永続化マッピングに使用する。バックエンドの層構成、各層の責務・依存方向、Composition Rootの役割は[ADR-0012](./0012-backend-layered-directory-structure.md)で定める。
 
