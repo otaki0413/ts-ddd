@@ -14,7 +14,7 @@ APIはCtrl-C、DBは`pnpm db:stop`で停止する。再開時は`pnpm db:up`と`
 
 ## スキーマ反映
 
-ローカル開発では[src/infrastructure/postgres/schema.ts](../src/infrastructure/postgres/schema.ts)を正として、`.env`を読む`db:push`で`public`スキーマへ反映する。マイグレーションSQLやスナップショットの履歴は管理しない。初回やスキーマ変更後は表示された差分を確認して適用する。変更がなければ再実行しても何も変わらない。データ損失の警告が出た場合は中止し、既存データを保つ変更方法を検討する。`--force`やボリューム削除で回避しない。以前のマイグレーションで作成済みの`drizzle`スキーマはpushの対象外で、履歴を削除する必要はない。
+ローカル開発では[src/infrastructure/postgres/schema.ts](../src/infrastructure/postgres/schema.ts)を正として、`.env`を読む`db:push`で`public`スキーマへ反映する。マイグレーションSQLやスナップショットの履歴は管理しない。適用するSQLは表示される。追加の変更は確認なしで入り、変更がなければ何も変わらない。データ損失の警告が出た場合は中止し、既存データを保つ変更方法を検討する。`--force`やボリューム削除で回避しない。以前のマイグレーションで作成済みの`drizzle`スキーマはpushの対象外で、履歴を削除する必要はない。
 
 ## 検証
 
