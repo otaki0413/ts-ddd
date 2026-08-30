@@ -1,0 +1,35 @@
+name: ts-ddd-reservations
+services:
+  db:
+    image: postgres:18.4-bookworm
+    environment:
+      POSTGRES_USER: ts_ddd
+      POSTGRES_DB: ts_ddd
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    ports:
+      - "127.0.0.1:55432:5432"
+    volumes:
+      - development-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ts_ddd -d ts_ddd"]
+      interval: 1s
+      timeout: 5s
+      retries: 30
+  test-db:
+    image: postgres:18.4-bookworm
+    profiles: [test]
+    environment:
+      POSTGRES_USER: ts_ddd_test
+      POSTGRES_DB: ts_ddd_test
+      POSTGRES_PASSWORD: ${TEST_POSTGRES_PASSWORD:?Set TEST_POSTGRES_PASSWORD in .env}
+    ports:
+      - "127.0.0.1:55433:5432"
+    tmpfs:
+      - /var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ts_ddd_test -d ts_ddd_test"]
+      interval: 1s
+      timeout: 5s
+      retries: 30
+volumes:
+  development-data:

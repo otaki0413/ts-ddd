@@ -1,3 +1,1 @@
-import { createGreeting } from "./greeting.js";
-
-console.log(createGreeting("DDD"));
+export { app as default } from "./http/app.js";

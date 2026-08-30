@@ -1,0 +1,161 @@
+{
+  "id": "397a151d-d5b0-4e43-a50a-57932bd671c6",
+  "prevId": "13e582c5-95f2-45f5-9bc6-01914e20da18",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.equipment": {
+      "name": "equipment",
+      "schema": "",
+      "columns": {
+        "management_number": {
+          "name": "management_number",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'available'"
+        },
+        "version": {
+          "name": "version",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "0"
+        },
+        "last_performed_by": {
+          "name": "last_performed_by",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_occurred_at_ns": {
+          "name": "last_occurred_at_ns",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "suspension_reason": {
+          "name": "suspension_reason",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "consistent_equipment_snapshot": {
+          "name": "consistent_equipment_snapshot",
+          "value": "(\n    \"equipment\".\"status\" = 'available' AND \"equipment\".\"version\" = 0\n    AND \"equipment\".\"last_performed_by\" IS NULL AND \"equipment\".\"last_occurred_at_ns\" IS NULL\n    AND \"equipment\".\"suspension_reason\" IS NULL\n  ) OR (\n    \"equipment\".\"version\" > 0 AND \"equipment\".\"version\" = trunc(\"equipment\".\"version\")\n    AND \"equipment\".\"last_performed_by\" IS NOT NULL AND \"equipment\".\"last_occurred_at_ns\" IS NOT NULL\n    AND \"equipment\".\"last_occurred_at_ns\" = trunc(\"equipment\".\"last_occurred_at_ns\")\n    AND ((\"equipment\".\"status\" = 'available' AND \"equipment\".\"suspension_reason\" IS NULL)\n      OR (\"equipment\".\"status\" = 'suspended' AND \"equipment\".\"suspension_reason\" IS NOT NULL\n        AND length(btrim(\"equipment\".\"suspension_reason\")) > 0))\n  )"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.reservations": {
+      "name": "reservations",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "management_number": {
+          "name": "management_number",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "starts_at": {
+          "name": "starts_at",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ends_at": {
+          "name": "ends_at",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "reservation_overlap_candidates": {
+          "name": "reservation_overlap_candidates",
+          "columns": [
+            {
+              "expression": "management_number",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "starts_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "ends_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "reservations_management_number_equipment_management_number_fk": {
+          "name": "reservations_management_number_equipment_management_number_fk",
+          "tableFrom": "reservations",
+          "tableTo": "equipment",
+          "columnsFrom": ["management_number"],
+          "columnsTo": ["management_number"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "positive_reservation_period": {
+          "name": "positive_reservation_period",
+          "value": "\"reservations\".\"starts_at\" < \"reservations\".\"ends_at\""
+        }
+      },
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
