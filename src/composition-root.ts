@@ -1,12 +1,12 @@
 import { randomUUID } from "node:crypto";
 import { Temporal } from "@js-temporal/polyfill";
 import { type NodePgDatabase } from "drizzle-orm/node-postgres";
-import { type ReservationRepository } from "./application/reservation-repository.js";
-import { ReserveEquipment } from "./application/reserve-equipment.js";
-import { ReservationId } from "./domain/identifiers.js";
-import { Instant } from "./domain/reservation-date-time.js";
-import { PostgresEquipmentRepository } from "./infrastructure/postgres/equipment.js";
-import { PostgresReservations } from "./infrastructure/postgres/reservations.js";
+import { type ReservationRepository } from "./application/reservation-repository";
+import { ReserveEquipment } from "./application/reserve-equipment";
+import { ReservationId } from "./domain/identifiers";
+import { Instant } from "./domain/reservation-date-time";
+import { PostgresEquipmentRepository } from "./infrastructure/postgres/equipment";
+import { PostgresReservations } from "./infrastructure/postgres/reservations";
 
 export interface ReservationServices {
   reserveEquipment: ReserveEquipment;

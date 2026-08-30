@@ -1,9 +1,9 @@
-import { type ManagementNumber, ReservationId, UserId } from "../domain/identifiers.js";
-import { Loan } from "../domain/loan.js";
-import { evaluateLoanAvailability } from "../domain/loan-availability-policy.js";
-import { type Clock } from "./clock.js";
-import { type ReservationRepository } from "./reservation-repository.js";
-import { type EquipmentRepository } from "./reserve-equipment.js";
+import { type ManagementNumber, ReservationId, UserId } from "../domain/identifiers";
+import { Loan } from "../domain/loan";
+import { evaluateLoanAvailability } from "../domain/loan-availability-policy";
+import { type Clock } from "./clock";
+import { type ReservationRepository } from "./reservation-repository";
+import { type EquipmentRepository } from "./reserve-equipment";
 
 export interface UnreturnedLoanQuery {
   findByManagementNumber(managementNumber: ManagementNumber): Promise<Loan | undefined>;

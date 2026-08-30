@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 
-import { ReservationId, UserId } from "./identifiers.js";
-import { Loan } from "./loan.js";
-import { Instant } from "./reservation-date-time.js";
+import { ReservationId, UserId } from "./identifiers";
+import { Loan } from "./loan";
+import { Instant } from "./reservation-date-time";
 
 const createLoan = (): Loan =>
   new Loan({

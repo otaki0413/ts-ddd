@@ -1,7 +1,7 @@
-import { ManagementNumber, ReservationId, UserId } from "../domain/identifiers.js";
-import { type Loan } from "../domain/loan.js";
-import { type Clock } from "./clock.js";
-import { type EquipmentRepository } from "./reserve-equipment.js";
+import { ManagementNumber, ReservationId, UserId } from "../domain/identifiers";
+import { type Loan } from "../domain/loan";
+import { type Clock } from "./clock";
+import { type EquipmentRepository } from "./reserve-equipment";
 
 export interface LoanRepository {
   findByReservationId(reservationId: ReservationId): Promise<Loan | undefined>;

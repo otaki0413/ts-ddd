@@ -1,9 +1,9 @@
-import { type Equipment } from "../domain/equipment.js";
-import { ManagementNumber, type ReservationId, UserId } from "../domain/identifiers.js";
-import { Reservation } from "../domain/reservation.js";
-import { evaluateReservationAvailability } from "../domain/reservation-availability-policy.js";
-import { ReservationPeriod } from "../domain/reservation-period.js";
-import { type Clock } from "./clock.js";
+import { type Equipment } from "../domain/equipment";
+import { ManagementNumber, type ReservationId, UserId } from "../domain/identifiers";
+import { Reservation } from "../domain/reservation";
+import { evaluateReservationAvailability } from "../domain/reservation-availability-policy";
+import { ReservationPeriod } from "../domain/reservation-period";
+import { type Clock } from "./clock";
 
 export interface EquipmentRepository {
   findByManagementNumber(managementNumber: ManagementNumber): Promise<Equipment | undefined>;

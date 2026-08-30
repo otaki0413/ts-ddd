@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
 
-import { Equipment } from "./equipment.js";
-import { ManagementNumber, ReservationId, UserId } from "./identifiers.js";
-import { Reservation } from "./reservation.js";
-import { evaluateReservationAvailability } from "./reservation-availability-policy.js";
-import { Instant } from "./reservation-date-time.js";
-import { ReservationPeriod } from "./reservation-period.js";
+import { Equipment } from "./equipment";
+import { ManagementNumber, ReservationId, UserId } from "./identifiers";
+import { Reservation } from "./reservation";
+import { evaluateReservationAvailability } from "./reservation-availability-policy";
+import { Instant } from "./reservation-date-time";
+import { ReservationPeriod } from "./reservation-period";
 
 const managementNumber = new ManagementNumber("EQ-001");
 const now = Instant.from("2026-09-01T00:00:00Z");

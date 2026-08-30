@@ -4,11 +4,10 @@
   "type": "module",
   "scripts": {
     "dev": "node --env-file=.env node_modules/vite/bin/vite.js",
-    "build": "tsc -p tsconfig.build.json",
     "test": "vitest run",
     "lint": "oxlint --type-aware --type-check --deny-warnings .",
     "format": "oxfmt .",
-    "check": "pnpm run lint && pnpm run format --check && pnpm run test && pnpm run build",
+    "check": "pnpm run lint && pnpm run format --check && pnpm run test",
     "db:up": "docker compose up -d --wait db",
     "db:stop": "docker compose stop db",
     "db:push": "node --env-file=.env node_modules/drizzle-kit/bin.cjs push",

@@ -1,6 +1,6 @@
-import { type ManagementNumber, type ReservationId, type UserId } from "./identifiers.js";
-import { type Instant } from "./reservation-date-time.js";
-import { type ReservationPeriod } from "./reservation-period.js";
+import { type ManagementNumber, type ReservationId, type UserId } from "./identifiers";
+import { type Instant } from "./reservation-date-time";
+import { type ReservationPeriod } from "./reservation-period";
 
 export interface ReservationCancellation {
   readonly cancelledBy: UserId;

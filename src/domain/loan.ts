@@ -1,5 +1,5 @@
-import { type ReservationId, type UserId } from "./identifiers.js";
-import { type Instant } from "./reservation-date-time.js";
+import { type ReservationId, type UserId } from "./identifiers";
+import { type Instant } from "./reservation-date-time";
 
 export interface LoanReturnConfirmation {
   readonly returnedAt: Instant;

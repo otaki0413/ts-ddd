@@ -1,5 +1,5 @@
-import { type ManagementNumber, type UserId } from "./identifiers.js";
-import { type Instant } from "./reservation-date-time.js";
+import { type ManagementNumber, type UserId } from "./identifiers";
+import { type Instant } from "./reservation-date-time";
 
 type EquipmentStatus = "available" | "suspended";
 

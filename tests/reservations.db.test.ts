@@ -6,16 +6,16 @@ import { drizzle } from "drizzle-orm/node-postgres";
 import { pushSchema } from "drizzle-kit/api";
 import { Pool } from "pg";
 
-import { app } from "../src/presentation/app.js";
-import { createReservationServices } from "../src/composition-root.js";
-import * as schema from "../src/infrastructure/postgres/schema.js";
-import { PostgresEquipmentRepository } from "../src/infrastructure/postgres/equipment.js";
-import { ManagementNumber, ReservationId } from "../src/domain/identifiers.js";
-import { Instant } from "../src/domain/reservation-date-time.js";
-import { ReserveEquipment } from "../src/application/reserve-equipment.js";
-import { PostgresReservations } from "../src/infrastructure/postgres/reservations.js";
-import { type ReservationServices } from "../src/composition-root.js";
-import { installDatabaseClock, setDatabaseClock } from "./database-clock.js";
+import { app } from "../src/presentation/app";
+import { createReservationServices } from "../src/composition-root";
+import * as schema from "../src/infrastructure/postgres/schema";
+import { PostgresEquipmentRepository } from "../src/infrastructure/postgres/equipment";
+import { ManagementNumber, ReservationId } from "../src/domain/identifiers";
+import { Instant } from "../src/domain/reservation-date-time";
+import { ReserveEquipment } from "../src/application/reserve-equipment";
+import { PostgresReservations } from "../src/infrastructure/postgres/reservations";
+import { type ReservationServices } from "../src/composition-root";
+import { installDatabaseClock, setDatabaseClock } from "./database-clock";
 
 const testUrl = new URL(process.env.TEST_DATABASE_URL ?? "");
 if (

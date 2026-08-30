@@ -1,4 +1,4 @@
-import { type Instant } from "../domain/reservation-date-time.js";
+import { type Instant } from "../domain/reservation-date-time";
 
 export interface Clock {
   now(): Instant;

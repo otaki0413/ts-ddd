@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
 
-import { Equipment } from "../domain/equipment.js";
-import { ManagementNumber, ReservationId, UserId } from "../domain/identifiers.js";
-import { Loan } from "../domain/loan.js";
-import { Instant } from "../domain/reservation-date-time.js";
-import { ConfirmLoanReturn, type LoanReturnConfirmResult } from "./confirm-loan-return.js";
+import { Equipment } from "../domain/equipment";
+import { ManagementNumber, ReservationId, UserId } from "../domain/identifiers";
+import { Loan } from "../domain/loan";
+import { Instant } from "../domain/reservation-date-time";
+import { ConfirmLoanReturn, type LoanReturnConfirmResult } from "./confirm-loan-return";
 
 const managementNumber = new ManagementNumber("EQ-001");
 

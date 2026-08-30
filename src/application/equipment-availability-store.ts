@@ -2,9 +2,9 @@ import {
   type Equipment,
   type EquipmentAvailabilityChange,
   type EquipmentAvailabilityChangeResult,
-} from "../domain/equipment.js";
-import { type ManagementNumber } from "../domain/identifiers.js";
-import { type Instant } from "../domain/reservation-date-time.js";
+} from "../domain/equipment";
+import { type ManagementNumber } from "../domain/identifiers";
+import { type Instant } from "../domain/reservation-date-time";
 
 export interface EquipmentAvailabilitySnapshot {
   readonly equipment: Equipment;
