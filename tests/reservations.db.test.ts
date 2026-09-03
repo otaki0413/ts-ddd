@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { Temporal } from "@js-temporal/polyfill";
-import { createServer } from "vite-plus";
+import { createServer } from "vite";
 import { afterAll, beforeAll, beforeEach, expect, it } from "vite-plus/test";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { pushSchema } from "drizzle-kit/api";
