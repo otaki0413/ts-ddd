@@ -6,7 +6,7 @@ TypeScript とドメイン駆動設計（DDD）を実践しながら、機材予
 
 ## 必要な環境
 
-- Node.js 24 以上
+- Node.js 24.11 以上
 - pnpm 11 以上
 - Docker EngineとDocker Compose（起動済み）
 - APIの確認例ではcurlとjq
