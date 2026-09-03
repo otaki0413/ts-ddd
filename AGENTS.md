@@ -11,7 +11,7 @@ TypeScript と DDD の学習用で、単一拠点の機材予約・貸出管理�
 ## 実装時の注意
 
 - 相対 import に拡張子は書かない。モジュール解決は Bundler で、`tsc` による emit はしない。
-- lint と型検査は `pnpm lint` に統合されている。変更完了前に `pnpm check` を実行する。
+- lint と型検査は `pnpm lint`（または `vp check`）に統合されている。変更完了前に `pnpm check` を実行する。
 
 ## Agent skills
 

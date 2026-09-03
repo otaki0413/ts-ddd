@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vite-plus/test";
 
 import { ManagementNumber, ReservationId, UserId } from "../domain/identifiers";
 import { Reservation } from "../domain/reservation";

@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { Temporal } from "@js-temporal/polyfill";
-import { createServer } from "vite";
-import { afterAll, beforeAll, beforeEach, expect, it } from "vitest";
+import { createServer } from "vite-plus";
+import { afterAll, beforeAll, beforeEach, expect, it } from "vite-plus/test";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { pushSchema } from "drizzle-kit/api";
 import { Pool } from "pg";
@@ -160,7 +160,7 @@ it.each([
   },
 );
 
-it("serves reservation creation, readback, and JSON errors through the actual Vite configuration", async () => {
+it("serves reservation creation, readback, and JSON errors through the actual Vite+ configuration", async () => {
   const previousUrl = process.env.DATABASE_URL;
   process.env.DATABASE_URL = process.env.TEST_DATABASE_URL;
   const server = await createServer({

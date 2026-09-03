@@ -15,7 +15,7 @@ TypeScriptとDDDの学習に用いる技術を、役割と採用理由ととも�
 
 HonoによるAPI開発を学習対象とし、Viteの開発サーバーでローカル実行する。PostgreSQLは、トランザクション内でTypeScriptのドメイン判定を使え、独立した接続間で排他を検証できるため選ぶ。DrizzleはSQLとトランザクションを明示して扱うために採用する。DBだけをDockerで起動し、アプリケーションはホスト上のNode.jsで動かす。本番環境へのデプロイや特定のクラウドサービスへの適合は、この学習環境の成立条件にしない。
 
-モジュール解決はTypeScriptのBundlerとし、相対importに拡張子は書かない。配布用のJavaScriptは出さない。型検査はoxlintのtype-aware / type-checkに寄せ、`tsc`のemitはcheckに含めない。Vite+への移行は今は行わない。
+モジュール解決はTypeScriptのBundlerとし、相対importに拡張子は書かない。配布用のJavaScriptは出さない。型検査はoxlintのtype-aware / type-checkに寄せ、`tsc`のemitはcheckに含めない。開発サーバー・テスト・静的解析・整形のツールチェーンにはVite+を採用し、設定とコマンド体系を統合する。
 
 HonoはHTTP入出力の変換、Valibotは入力の構造と型の検証、DrizzleはSQLと永続化マッピングに使用する。バックエンドの層構成、各層の責務・依存方向、Composition Rootの役割は[ADR-0012](./0012-backend-layered-directory-structure.md)で定める。
 
